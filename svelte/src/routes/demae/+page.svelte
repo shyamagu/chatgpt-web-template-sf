@@ -1,6 +1,6 @@
 <script>
 
-    let title = "ChatGPT Demae"
+    let title = "来々軒 出前ボット"
 
     /**
      * @type {{ role: string; content: string; }[]}

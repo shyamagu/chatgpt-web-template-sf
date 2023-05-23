@@ -15,11 +15,12 @@ openai.api_base = settings.AOAI_ENDPOINT
 openai.api_version = "2023-05-15"
 openai.api_key = settings.AOAI_API_KEY
 
-def call_chatgpt (messages):
+def call_chatgpt (messages,temperature=0):
 
     response = openai.ChatCompletion.create(
         engine=settings.AOAI_MODEL, # engine = "deployment_name".
-        messages=messages
+        messages=messages,
+        temperature=temperature,
     )
 
     return response['choices'][0]['message']['content']
