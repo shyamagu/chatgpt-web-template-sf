@@ -47,8 +47,8 @@ async def order(messages: List[Message]):
 まず、お客様に挨拶をし、注文を受け付けます。
 注文がすべて揃うまで待ち、それを要約して最終確認としてお客様に他に何か追加したいものがないか尋ねます。
 注文が揃ったら、住所と名前を尋ねます。
-途中であなたからは金額は決して提示してはなりません。
-金額は**必ず計算式を明示**した上で、最後に提示します。
+金額は決して提示してはなりません。
+注文が完了、もしくは金額を聞かれたら「サマリーボタンを押してください」と返答してください。
 メニューから商品を一意に特定できるように、すべての単品注文、サイズを明確にしてください。
 短く、親しみやすいスタイルで返答します。
 メニューは以下のとおりです。
@@ -77,7 +77,7 @@ async def summary(messages: List[Message]):
     # System Prompt
     system_prompt = f"""Create a json summary of the previous food order.
 The fields should be 1) item_name 2) item_size 3) item_price 4) quantity. 
-**Your output should be a JSON. ONLY**
+**Your output must be a JSON ONLY.**
 
 output JSON example:
 [
