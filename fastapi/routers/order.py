@@ -8,26 +8,7 @@ from logger import logger
 
 router = APIRouter()
 
-class Message(BaseModel):
-    role: str
-    content: str
-
-@router.post("/order")
-async def message(messages: List[Message]):
-
-    # messagesの最後から10要素のみにする
-    messages = messages[-10:]
-
-    # System Prompt
-    system_prompt = """あなたは注文ボットです。来々軒というラーメン屋の宅配注文を受け付ける自動サービスです。
-まず、お客様に挨拶をし、注文を受け付けます。
-注文がすべて揃うまで待ち、それを要約して最終確認としてお客様に他に何か追加したいものがないか尋ねます。
-注文が揃ったら、住所と名前を尋ねます。
-途中であなたからは金額は決して提示してはなりません。
-金額は**必ず計算式を明示**した上で、最後に提示します。
-メニューから商品を一意に特定できるように、すべての単品注文、サイズを明確にしてください。
-短く、親しみやすいスタイルで返答します。
-メニューは以下のとおりです。
+menu = """
 ラーメン:
 醤油ラーメン 普通800円、大盛900円
 味噌ラーメン 普通800円、大盛900円
@@ -49,6 +30,29 @@ async def message(messages: List[Message]):
 飲み物:
 ビール 大1000円、中700円、小500円
 お茶 300円
+"""
+
+class Message(BaseModel):
+    role: str
+    content: str
+
+@router.post("/order")
+async def message(messages: List[Message]):
+
+    # messagesの最後から10要素のみにする
+    messages = messages[-10:]
+
+    # System Prompt
+    system_prompt = f"""あなたは注文ボットです。来々軒というラーメン屋の宅配注文を受け付ける自動サービスです。
+まず、お客様に挨拶をし、注文を受け付けます。
+注文がすべて揃うまで待ち、それを要約して最終確認としてお客様に他に何か追加したいものがないか尋ねます。
+注文が揃ったら、住所と名前を尋ねます。
+途中であなたからは金額は決して提示してはなりません。
+金額は**必ず計算式を明示**した上で、最後に提示します。
+メニューから商品を一意に特定できるように、すべての単品注文、サイズを明確にしてください。
+短く、親しみやすいスタイルで返答します。
+メニューは以下のとおりです。
+{menu}
 """
     # messagesの先頭に要素を追加
     messages.insert(0, Message(role="system", content=system_prompt))
