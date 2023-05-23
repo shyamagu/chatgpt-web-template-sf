@@ -1,6 +1,6 @@
 <script>
 
-    let title = "ChatGPT Simple"
+    let title = "ChatGPT Demae"
 
     /**
      * @type {{ role: string; content: string; }[]}
@@ -18,7 +18,7 @@
       chats = [...chats, {"role":"user","content":message}]
       message = "";
     
-      const response = await fetch("/simple", {
+      const response = await fetch("/order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

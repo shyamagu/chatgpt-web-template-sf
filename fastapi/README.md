@@ -1,8 +1,8 @@
 # .env
 ```
-AZURE_OPENAI_KEY=xxxx
-AZURE_OPENAI_ENDPOINT=xxxx
-AZURE_OPENAI_MODEL=xxxx
+AOAI_OPENAI_KEY=xxxx
+AOAI_ENDPOINT=xxxx
+AOAI_MODEL=xxxx
 ```
 # debug run
 ```
