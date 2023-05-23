@@ -5,11 +5,15 @@
     /**
      * @type {{ role: string; content: string; }[]}
      */
-    export let chats = [];
+    let chats = [];
+
+    let summary = "";
 
     let message = "";
 
     let loading = false;
+
+    let summary_loading = false;
 
     // send POST request to call ChatGPT
     async function postMessage() {
@@ -31,6 +35,27 @@
       chats = [...chats, {"role":"assistant","content":data.message}]
 
       loading = false;
+    }
+
+    // send POST request to call ChatGPT
+    async function makeSummary() {
+
+      summary_loading = true;
+      summary = "";
+
+      const response = await fetch("/order/summary", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(chats)
+      });
+
+      const data = await response.json();
+
+      summary = data.message;
+
+      summary_loading = false;
     }
 
     // KeyDown EventHandler
@@ -63,23 +88,36 @@
 </svelte:head>
 
 <div class="main">
-  <h1>{title}</h1>
-  <div class="chatfield">
-    {#each chats as chat}
-      <div class="chat_{chat.role}">
-        <pre class="chat_message">{chat.content}</pre>
-      </div>
-    {/each}
-    {#if loading}
+
+  <div class="chat_main">
+    <h1>{title}</h1>
+    <div class="chatfield">
+      {#each chats as chat}
+        <div class="chat_{chat.role}">
+          <pre class="chat_message">{chat.content}</pre>
+        </div>
+      {/each}
+      {#if loading}
+        <div class="loader"></div>
+      {/if}
+    </div>
+    <textarea class="messagebox" title="chat" name="chat" id="chat" placeholder="メッセージを入力してください" bind:value={message} on:keydown={handleKeyDown}></textarea>
+    <div class="messagebox_bottom">
+      <button class="button_clear" on:click={() => chats = []}>クリア</button>
+      <button class="button_send" on:click={postMessage}>送信</button>
+    </div>
+  </div>
+
+  <div class="summary_main">
+    <button class="button_summary" on:click={makeSummary}>注文サマリ作成</button>
+    {#if summary_loading}
       <div class="loader"></div>
     {/if}
+    <div class="chat_message">
+      {summary}
+    </div>
   </div>
-  <textarea class="messagebox" title="chat" name="chat" id="chat" placeholder="メッセージを入力してください" bind:value={message} on:keydown={handleKeyDown}></textarea>
-  <div class="messagebox_bottom">
-    <button class="button_clear" on:click={() => chats = []}>クリア</button>
-    <button class="button_send" on:click={postMessage}>送信</button>
-  </div>
-  
+
 </div>
 
 <style>
@@ -95,11 +133,25 @@ h1{
   text-align: center;
 }
 
-.main {
-    width: 50%;
+.main{
+  display: flex;
+}
+.chat_main {
+    width: 70%;
     min-width: 500px;
+    max-width: 700px;
     height:calc(100vh - 151px);
     margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.summary_main {
+    width: 30%;
+    min-width:200px;
+    max-width:400px;
+    height:calc(100vh - 100px);
+    margin: 10px auto 0px 0px;
     display: flex;
     flex-direction: column;
 }
@@ -164,6 +216,19 @@ h1{
     padding: 10 20px;
     margin: 10px 0 0 10px;
     width:100px;
+    background-color: #6666ff;
+    color:#fff;
+    font-family: 'Noto Sans JP', sans-serif;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.button_summary {
+  font-size: 1.2em;
+    padding: 10 20px;
+    margin: 50px auto 0px auto;
+    width:200px;
     background-color: #6666ff;
     color:#fff;
     font-family: 'Noto Sans JP', sans-serif;

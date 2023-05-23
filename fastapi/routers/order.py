@@ -37,7 +37,7 @@ class Message(BaseModel):
     content: str
 
 @router.post("/order")
-async def message(messages: List[Message]):
+async def order(messages: List[Message]):
 
     # messagesの最後から10要素のみにする
     messages = messages[-10:]
@@ -52,6 +52,56 @@ async def message(messages: List[Message]):
 メニューから商品を一意に特定できるように、すべての単品注文、サイズを明確にしてください。
 短く、親しみやすいスタイルで返答します。
 メニューは以下のとおりです。
+{menu}
+"""
+    # messagesの先頭に要素を追加
+    messages.insert(0, Message(role="system", content=system_prompt))
+
+    logger.debug(messages)
+
+    # ChatGPTを呼び出す
+    answer = call_chatgpt([m.dict() for m in messages])
+
+    data = {
+        "message": answer
+    }
+    # JSONResponseに辞書型のデータを渡して返す
+    return JSONResponse(content=data)
+
+@router.post("/order/summary")
+async def summary(messages: List[Message]):
+
+    # messagesの最後から10要素のみにする
+    messages = messages[-10:]
+
+    # System Prompt
+    system_prompt = f"""Create a json summary of the previous food order.
+The fields should be 1) item_name 2) item_size 3) item_price 4) quantity. 
+**Your output should be a JSON. ONLY**
+
+output JSON example:
+[
+    {{
+      "item_name": "醤油ラーメン",
+      "item_size": "普通"
+      "item_price": 800,
+      "quantity": 2
+    }},
+    {{
+      "item_name": "味噌ラーメン",
+      "item_size": "普通"
+      "item_price": 800,
+      "quantity": 1
+    }},
+    {{
+      "item_name": "ビール",
+      "item_size": "大"
+      "item_price": 1000,
+      "quantity": 1,
+    }}
+]
+
+The menu is following:
 {menu}
 """
     # messagesの先頭に要素を追加
