@@ -1,4 +1,6 @@
 <script>
+    import { fly } from 'svelte/transition';
+
     let title = "ChatGPT Simple"
 
     /**
@@ -65,7 +67,7 @@
   <h1>{title}</h1>
   <div class="chatfield">
     {#each chats as chat}
-      <div class="chat_{chat.role}">
+      <div class="chat_{chat.role}" transition:fly="{{ y: 50, duration: 500 }}">
         <pre class="chat_message">{chat.content}</pre>
       </div>
     {/each}
@@ -172,6 +174,10 @@ h1{
     border: none;
     border-radius: 20px;
     font-weight: bold;
+}
+
+.button_send:active{
+  transform: scale(1.2);
 }
 
 .button_clear {

@@ -1,4 +1,6 @@
 <script>
+    import { fly } from 'svelte/transition';
+
     let title = "来々軒 出前ボット"
 
     /**
@@ -92,7 +94,7 @@
     <h1>{title}</h1>
     <div class="chatfield">
       {#each chats as chat}
-        <div class="chat_{chat.role}">
+        <div class="chat_{chat.role}" transition:fly="{{ y: 50, duration: 500 }}">
           <pre class="chat_message">{chat.content}</pre>
         </div>
       {/each}
@@ -103,7 +105,7 @@
     <textarea class="messagebox" title="chat" name="chat" id="chat" placeholder="メッセージを入力してください" bind:value={message} on:keydown={handleKeyDown}></textarea>
     <div class="messagebox_bottom">
       <button class="button_clear" on:click={() => chats = []}>クリア</button>
-      <button class="button_send" on:click={postMessage}>送信</button>
+      <button class="button_send"  on:click={postMessage}>送信</button>
     </div>
   </div>
 
@@ -224,6 +226,10 @@ h1{
     border: none;
     border-radius: 20px;
     font-weight: bold;
+}
+
+.button_send:active{
+  transform: scale(1.2);
 }
 
 .button_summary {
