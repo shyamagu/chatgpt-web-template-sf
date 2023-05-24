@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from routers import simple,order
 from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse
+
 
 app = FastAPI()
 
@@ -12,6 +14,7 @@ app.include_router(simple.router)
 app.include_router(order.router)
 
 # /demae のHTMLを返す
+# 本当はもっとスマートにやりたい。sveltekitでのbuild成果物依存
 @app.get("/demae")
 async def demae():
     with open("static/demae.html", encoding="utf-8") as f:
@@ -20,4 +23,3 @@ async def demae():
 
 # staticディレクトリにindex.htmlを置く
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
-
