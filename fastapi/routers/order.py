@@ -74,13 +74,22 @@ async def summary(messages: List[Message]):
     # messagesの最後から10要素のみにする
     messages = messages[-10:]
 
-    # System Prompt
-    system_prompt = f"""Create a json summary of the previous food order.
-The fields should be 1) item_name 2) item_size 3) item_price 4) quantity. 
-**Your output must be a JSON ONLY.**
+    # mesagesの内容を平文のテキストにする。roleによって話者名をつける
+    text = ""
+    for m in messages:
+        if m.role == "user":
+            text += "お客様: " + m.content + "\n"
+        elif m.role == "assistant":
+            text += "あなた: " + m.content + "\n"
 
-output JSON example:
-[
+    # System Prompt
+    system_prompt = f"""あなたは会話履歴からJSONを生成するマシーンです。
+JSONには、1) item_name 2) item_size 3) item_price 4) quantity. 5) delivery_address 6) customer_name を含めてください。
+JSON以外の説明や補足は不要です。
+
+出力JSON例:
+{{
+    order:[
     {{
       "item_name": "醤油ラーメン",
       "item_size": "普通"
@@ -99,13 +108,20 @@ output JSON example:
       "item_price": 1000,
       "quantity": 1,
     }}
-]
+    ],
+    "delivery_address": "東京都渋谷区神南1-1-1",
+    "customer_name": "山田太郎"
+}}
 
-The menu is following:
+会話履歴:
+{text}
+
+メニュー表:
 {menu}
 """
-    # messagesの先頭に要素を追加
-    messages.insert(0, Message(role="system", content=system_prompt))
+
+    # 新しいList(Messsage)を作成し、先頭に要素を追加
+    messages = [Message(role="system", content=system_prompt),Message(role="user",content="JSONのみ回答して下さい")]
 
     logger.debug(messages)
 

@@ -86,9 +86,12 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap');
 
 :global(body){
-    margin:0px;
-    background: linear-gradient(to right bottom, #f0f0f0, #f0f0ff);
-    font-family: 'Noto Sans JP', sans-serif;
+  --back_color:#f0f0ff;
+  --btn_color:#6666ff;
+  --chat_color:#444499;
+  margin:0px;
+  background: linear-gradient(to right bottom, #f0f0f0, var(--back_color));
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 h1{
@@ -116,7 +119,7 @@ h1{
     width:80%;
     border: 1px solid #ccc;
     color: #fff;
-    background-color: #444499;
+    background-color: var(--chat_color);
     padding: 5px 5px 5px 10px;
     margin: 10px auto 20px 30px;
     border-radius: 10px 10px 10px 0;
@@ -164,7 +167,7 @@ h1{
     padding: 10 20px;
     margin: 10px 0 0 10px;
     width:100px;
-    background-color: #6666ff;
+    background-color: var(--btn_color);
     color:#fff;
     font-family: 'Noto Sans JP', sans-serif;
     border: none;
