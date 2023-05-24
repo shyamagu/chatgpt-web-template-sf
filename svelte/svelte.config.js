@@ -7,7 +7,7 @@ export default {
             // these options are set automatically — see below
             pages: '../fastapi/static',
             assets: '../fastapi/static',
-            fallback: 'index.html',
+            fallback: null,
             precompress: false,
             strict: true
         })
