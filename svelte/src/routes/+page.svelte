@@ -1,5 +1,4 @@
 <script>
-
     let title = "ChatGPT Simple"
 
     /**

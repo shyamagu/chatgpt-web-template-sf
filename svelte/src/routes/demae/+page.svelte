@@ -1,5 +1,4 @@
 <script>
-
     let title = "来々軒 出前ボット"
 
     /**
