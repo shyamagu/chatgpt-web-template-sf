@@ -1,14 +1,23 @@
 <script>
-    import { fly } from 'svelte/transition';
+    import { fly,slide } from 'svelte/transition';
 
-    let title = "ChatGPT Simple"
+    let title = "ChatGPT + GoogleBooksAPI"
 
     /**
      * @type {{ role: string; content: string; }[]}
      */
-    export let chats = [];
+    let chats = [];
 
     let message = "";
+
+    let totalnum = 0;
+
+    let query = "";
+
+    /**
+     * @type {{infolink:string; title:string; authors:string[]; description:string; smallThumbnail:string}[]}
+     */
+    let books = [];
 
     let loading = false;
 
@@ -19,7 +28,7 @@
       chats = [...chats, {"role":"user","content":message}]
       message = "";
     
-      const response = await fetch("/simple", {
+      const response = await fetch("/booksearch", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -31,7 +40,20 @@
 
       chats = [...chats, {"role":"assistant","content":data.message}]
 
+      books = data.bookresult;
+
+      totalnum = data.totalnum;
+
+      query = data.query;
+
       loading = false;
+    }
+
+    function clearAll(){
+      totalnum = 0;
+      chats = [];
+      books = [];
+      query = "";
     }
 
     // KeyDown EventHandler
@@ -48,8 +70,8 @@
           postMessage();
           e.preventDefault();
         }
-    }
-    
+      }
+
     // Automatic scrolldown in chatfield
     import { afterUpdate } from "svelte";
 
@@ -68,46 +90,119 @@
 </svelte:head>
 
 <div class="main">
-  <h1>{title}</h1>
-  <div class="chatfield">
-    {#each chats as chat}
-      <div class="chat_{chat.role}" transition:fly="{{ y: 50, duration: 500 }}">
-        <pre class="chat_message">{chat.content}</pre>
+
+  <div class="chat_main">
+    <h1>{title}</h1>
+    <div class="chatfield">
+      {#each chats as chat}
+        <div class="chat_{chat.role}" transition:fly="{{ y: 50, duration: 500 }}">
+          <pre class="chat_message">{chat.content}</pre>
+        </div>
+      {/each}
+      {#if loading}
+        <div class="loader"></div>
+      {/if}
+    </div>
+    <textarea class="messagebox" title="chat" name="chat" id="chat" placeholder="メッセージを入力してください" bind:value={message} on:keydown={handleKeyDown}></textarea>
+    <div class="messagebox_bottom">
+      <button class="button_clear" on:click={clearAll}>クリア</button>
+      <button class="button_send"  on:click={postMessage}>送信</button>
+    </div>
+  </div>
+
+  <div class="summary_main">
+    {#if totalnum!==0}
+      <h4>{totalnum} 件の書籍が見つかりました。うち {books.length} 件を表示します</h4>
+      <div class="query">検索クエリ―: {query}</div>
+    {/if}
+    {#each books as book}
+      <div class="book_field" transition:slide="{{axis:'x'}}">
+        <div class="book_image_field">
+          <img class="book_image" src={book.smallThumbnail} alt={book.title} />
+        </div>
+        <div class="book_detail">
+          <a href={book.infolink} target="_blank"><h3>{book.title}</h3></a>
+          <p>{book.authors}</p>
+          <p>{book.description}</p>
+        </div>
       </div>
     {/each}
-    {#if loading}
-      <div class="loader"></div>
-    {/if}
   </div>
-  <textarea class="messagebox" title="chat" name="chat" id="chat" placeholder="メッセージを入力してください" bind:value={message} on:keydown={handleKeyDown}></textarea>
-  <div class="messagebox_bottom">
-    <button class="button_clear" on:click={() => chats = []}>クリア</button>
-    <button class="button_send" on:click={postMessage}>送信</button>
-  </div>
-  
+
 </div>
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap');
 
 :global(body){
-  --back_color:#f0f0ff;
-  --btn_color:#6666ff;
-  --chat_color:#444499;
+  --back_color:#f6fff6;
+  --btn_color:#33cc55;
+  --chat_color:#22aa00;
+  --book_color:#ddffdd;
   margin:0px;
   background: linear-gradient(to right bottom, #f0f0f0, var(--back_color));
   font-family: 'Noto Sans JP', sans-serif;
+  height:100vh;
 }
 
 h1{
   text-align: center;
 }
 
-.main {
-    width: 50%;
+h4{
+  text-align: left;
+  margin: 40px 0 0 20px;
+}
+
+.query{
+  font-size: 0.8em;
+  margin: 0 0 0 20px;
+}
+
+.main{
+  display: flex;
+  width:70%;
+  margin:auto;
+}
+
+.book_field{
+  width: 100%;
+  display: flex;
+  margin: 10px 10px;
+  background-color: var(--book_color);
+  border-radius: 5px;
+  box-shadow: 1px 2px 2px 0px #ddd;
+  padding: 0 10px;
+}
+
+.book_image_field{
+  width:100px;
+}
+
+.book_image{
+  width:90px;
+  margin: 20px 5px;
+}
+
+.book_detail{
+  width:350px;
+  font-size: 0.7em;
+}
+
+.chat_main {
+    width: 70%;
     min-width: 500px;
+    max-width: 700px;
     height:calc(100vh - 151px);
     margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.summary_main {
+    width: 450px;
+    height:calc(100vh - 100px);
+    margin: 30px auto 0px 0px;
     display: flex;
     flex-direction: column;
 }
@@ -182,6 +277,19 @@ h1{
 
 .button_send:active{
   transform: scale(1.2);
+}
+
+.button_summary {
+  font-size: 1.2em;
+    padding: 10 20px;
+    margin: 50px auto 0px auto;
+    width:200px;
+    background-color: var(--btn_color);
+    color:#fff;
+    font-family: 'Noto Sans JP', sans-serif;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
 }
 
 .button_clear {

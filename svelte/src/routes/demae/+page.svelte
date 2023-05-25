@@ -65,12 +65,15 @@
      */
      function handleKeyDown(e) {
         if (e.keyCode === 13 && e.shiftKey) {
-        // Shift+Enter
-        postMessage();
-        e.preventDefault();
+          // Shift+Enter
+          message += "\n";
+          e.preventDefault();
+        }else if (e.keyCode === 13) {
+          // Enter
+          postMessage();
+          e.preventDefault();
         }
     }
-
     // Automatic scrolldown in chatfield
     import { afterUpdate } from "svelte";
 
