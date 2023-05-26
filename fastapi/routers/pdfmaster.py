@@ -23,6 +23,7 @@ async def pdfanalyze(pdfUrl: PdfUrl):
 
     analyze_result = analyze_pdf(pdfUrl.url)
 
+    # 検証用のためglobalで代替。本当はベクトルDBに保存する
     global embedding_data
     embedding_data = encode_contents(analyze_result)
 
@@ -34,6 +35,8 @@ async def pdfanalyze(pdfUrl: PdfUrl):
 
 @router.post("/pdfsearch")
 async def pdfsearch(messages: List[Message]):
+
+    # 検証用のためglobalで代替。本当はベクトルDBから直接検索する
     global embedding_data
 
     # messagesの最後から10要素のみにする
