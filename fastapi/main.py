@@ -40,5 +40,11 @@ async def demae():
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
+@app.get("/pdf")
+async def demae():
+    with open("static/pdf.html", encoding="utf-8") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content, status_code=200)
+
 # staticディレクトリにindex.htmlを置く
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
