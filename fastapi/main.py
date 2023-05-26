@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from routers import simple,order,booksearch,bingsearch
+from routers import simple,order,booksearch,bingsearch,pdfmaster
 from fastapi.responses import HTMLResponse
 
 app = FastAPI()
@@ -16,6 +16,9 @@ app.include_router(booksearch.router)
 
 # /bingsearch
 app.include_router(bingsearch.router)
+
+# /pdf**
+app.include_router(pdfmaster.router)
 
 # HTMLを返す
 # 本当はもっとスマートにやりたい。sveltekitでのbuild成果物依存

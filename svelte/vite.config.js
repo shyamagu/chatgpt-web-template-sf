@@ -25,6 +25,15 @@ export default defineConfig({
 				changeOrigin: true,
 			},
 
+			'/pdfanalyze': {
+				'target': 'http://127.0.0.1:8000',
+				changeOrigin: true,
+			},
+			'/pdfsearch': {
+				'target': 'http://127.0.0.1:8000',
+				changeOrigin: true,
+			},
+
 		}
 	}
 });
