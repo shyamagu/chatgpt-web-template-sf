@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from routers import simple,order,booksearch
+from routers import simple,order,booksearch,bingsearch
 from fastapi.responses import HTMLResponse
 
 app = FastAPI()
@@ -14,6 +14,9 @@ app.include_router(order.router)
 # /booksearch
 app.include_router(booksearch.router)
 
+# /bingsearch
+app.include_router(bingsearch.router)
+
 # HTMLを返す
 # 本当はもっとスマートにやりたい。sveltekitでのbuild成果物依存
 @app.get("/demae")
@@ -25,6 +28,12 @@ async def demae():
 @app.get("/book")
 async def demae():
     with open("static/book.html", encoding="utf-8") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content, status_code=200)
+
+@app.get("/bing")
+async def demae():
+    with open("static/bing.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
