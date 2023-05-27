@@ -1,227 +1,97 @@
 <script>
-    import { fly } from 'svelte/transition';
+  let title = "ChatGPT Samples"
 
-    let title = "ChatGPT Simple"
+  /**
+   * @param {string | URL | undefined} page
+   */
+  function movepage(page){
+    window.open(page, '_blank')
 
-    /**
-     * @type {{ role: string; content: string; }[]}
-     */
-    export let chats = [];
-
-    let message = "";
-
-    let loading = false;
-
-    // send POST request to call ChatGPT
-    async function postMessage() {
-
-      loading = true;
-      chats = [...chats, {"role":"user","content":message}]
-      message = "";
-    
-      const response = await fetch("/simple", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(chats)
-      });
-
-      const data = await response.json();
-
-      chats = [...chats, {"role":"assistant","content":data.message}]
-
-      loading = false;
-    }
-
-    // KeyDown EventHandler
-    /**
-     * @param {{ keyCode: number; shiftKey: any; preventDefault: () => void; }} e
-     */
-     function handleKeyDown(e) {
-        if (e.keyCode === 13 && e.shiftKey) {
-          // Shift+Enter
-          message += "\n";
-          e.preventDefault();
-        }else if (e.keyCode === 13) {
-          // Enter
-          postMessage();
-          e.preventDefault();
-        }
-    }
-    
-    // Automatic scrolldown in chatfield
-    import { afterUpdate } from "svelte";
-
-    const scrollBottom = () => {
-      const chatField = document.querySelector(".chatfield");
-      if (chatField) {
-        const height = chatField.scrollHeight;
-        chatField.scrollTo(0, height);
-      }
-    };
-    afterUpdate(scrollBottom);
+  }
 </script>
 
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
 
-<div class="main">
-  <h1>{title}</h1>
-  <div class="chatfield">
-    {#each chats as chat}
-      <div class="chat_{chat.role}" transition:fly="{{ y: 50, duration: 500 }}">
-        <pre class="chat_message">{chat.content}</pre>
-      </div>
-    {/each}
-    {#if loading}
-      <div class="loader"></div>
-    {/if}
+<!-- /basicへのリンク、新しいタブで開く -->
+<h1>{title}</h1>
+
+<div class="board">
+
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/basic')}>
+    <h2>シンプル</h2>
+    <p>ChatGPTの基本系サンプル</p>
   </div>
-  <textarea class="messagebox" title="chat" name="chat" id="chat" placeholder="メッセージを入力してください" bind:value={message} on:keydown={handleKeyDown}></textarea>
-  <div class="messagebox_bottom">
-    <button class="button_clear" on:click={() => chats = []}>クリア</button>
-    <button class="button_send" on:click={postMessage}>送信</button>
+
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/demae')}>
+    <h2>注文ボット</h2>
+    <p>来々軒の出前受付ボット</p>
   </div>
-  
+
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/book')}>
+    <h2>書籍検索</h2>
+    <p>Google Books API との連携 ChatGPT</p>
+  </div>
+    
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/bing')}>
+    <h2>Web検索</h2>
+    <p>Bing検索+スクレイピングを取り込んだChatGPT</p>
+  </div>
+
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/pdf')}>
+    <h2>PDF分析チャット</h2>
+    <p>Azure FormRecognizer と Embedding によるベクトル検索 + ChatGPT</p>
+  </div>
 </div>
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap');
 
 :global(body){
-  --back_color:#fcfcfc;
-  --btn_color:#999999;
-  --chat_color:#666666;
   margin:0px;
-  background: linear-gradient(to right bottom, #f0f0f0, var(--back_color));
+  background-color: #fff;
   font-family: 'Noto Sans JP', sans-serif;
-  height:calc(100vh - 20px);
+  background: linear-gradient(to right bottom, #333366, #336633);
+  height:calc(100vh - 70px)
 }
 
 h1{
+  color:#fef;
+  margin:70px auto;
+  font-size: 3.6em;
   text-align: center;
 }
 
-.main {
-    width: 50%;
-    min-width: 500px;
-    height:calc(100vh - 151px);
-    margin: 10px auto;
-    display: flex;
-    flex-direction: column;
+.board{
+  width:80%;
+  min-width:700px;
+  margin:auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.chatfield{
-    width: 95%;
-    margin: 0px auto;
-    height: calc(100vh - 400px);
-    border: 1px solid #f0f0f0;
-    overflow-y: scroll;
+.card{
+  cursor: pointer;
+  width: 200px;
+  height: 150px;
+  margin: 20px;
+  padding: 20px 20px 40px 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 2px 4px 4px 0px #333;
+  background-color: #ccc;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
-.chat_user{
-    width:80%;
-    border: 1px solid #ccc;
-    color: #fff;
-    background-color: var(--chat_color);
-    padding: 5px 5px 5px 10px;
-    margin: 10px auto 20px 30px;
-    border-radius: 10px 10px 10px 0;
-    box-shadow: 1px 2px 2px 0px #ccc;
+.card:hover{
+  background-color: #fef;
+  color: #333;
 }
-
-.chat_assistant{
-    width:80%;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    margin-left: auto;
-    padding: 5px 5px 5px 10px;
-    margin: 10px 30px 20px auto;
-    border-radius: 10px 10px 0 10px;
-    box-shadow: 1px 2px 2px 0px #ccc;
-}
-
-.chat_message{
-    white-space: pre-wrap;
-    font-size: 1.0em;
-    font-family: 'Noto Sans JP', sans-serif;
-}
-
-.messagebox {
-    width: 90%;
-    height: 100px;
-    resize: none;
-    outline: none;
-    background-color: #ffffff;
-    margin:20px auto 0px auto;
-    font-size: 1.0em;
-    border: 3px solid #666;
-    border-radius: 10px;
-    font-family: 'Noto Sans JP', sans-serif;
-}
-
-.messagebox_bottom {
-    width: 95%;
-    height: 50px;
-    text-align: right;
-}
-
-.button_send {
-    font-size: 1.1em;
-    padding: 10 20px;
-    margin: 10px 0 0 10px;
-    width:100px;
-    background-color: var(--btn_color);
-    color:#fff;
-    font-family: 'Noto Sans JP', sans-serif;
-    border: none;
-    border-radius: 20px;
-    font-weight: bold;
-}
-
-.button_send:active{
-  transform: scale(1.2);
-}
-
-.button_clear {
-    font-size: 1.1em;
-    padding: 10 20px;
-    margin: 10px 0 0 10px;
-    width:100px;
-    background-color: #999999;
-    color:#fff;
-    font-family: 'Noto Sans JP', sans-serif;
-    border: none;
-    border-radius: 20px;
-    font-weight: bold;
-}
-
-.error{
-    color: red;
-}
-
-.loader {
-    margin: auto;
-    margin-top: 10px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 5px solid #ccc;
-    border-top-color: #333;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
 </style>

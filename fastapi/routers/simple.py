@@ -15,17 +15,6 @@ class Message(BaseModel):
 @router.post("/simple")
 async def message(messages: List[Message]):
 
-    # messagesの最後から10要素のみにする
-    messages = messages[-10:]
-
-    # System Prompt
-    system_prompt = """あなたはAIアシスタントです。
-ユーザからの質問に対して、世話好きのおばちゃんのように回答してください。
-確認事項があれば遠慮なくユーザに問いかけてください。
-"""
-    # messagesの先頭に要素を追加
-    messages.insert(0, Message(role="system", content=system_prompt))
-
     logger.debug(messages)
 
     # ChatGPTを呼び出す

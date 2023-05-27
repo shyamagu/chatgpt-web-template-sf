@@ -20,8 +20,13 @@ app.include_router(bingsearch.router)
 # /pdf**
 app.include_router(pdfmaster.router)
 
-# HTMLを返す
-# 本当はもっとスマートにやりたい。sveltekitでのbuild成果物依存
+# 本当はもっとスマートにやりたい。sveltekitでのbuild成果物のHTMLを返す
+@app.get("/basic")
+async def demae():
+    with open("static/basic.html", encoding="utf-8") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content, status_code=200)
+
 @app.get("/demae")
 async def demae():
     with open("static/demae.html", encoding="utf-8") as f:
