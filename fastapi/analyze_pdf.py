@@ -27,6 +27,8 @@ def analyze_pdf(url):
         endpoint=endpoint, credential=AzureKeyCredential(key)
     )
 
+    logger.debug("--- START ANALYZE PDF ---")
+
     poller = document_analysis_client.begin_analyze_document_from_url(
             "prebuilt-layout", formUrl)
     result = poller.result()
@@ -49,5 +51,7 @@ def analyze_pdf(url):
 
         return_result.append({"id":index,"role":paragraph.role,"content":content})
         index += 1
+
+    logger.debug("---  END  ANALYZE PDF ---")
 
     return return_result

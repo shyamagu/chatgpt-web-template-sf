@@ -23,6 +23,7 @@ def encode_contents (contents):
     for i in range(len(contents)):
         embedding = get_embedding(contents[i]["content"], settings.AOAI_EMB_MODEL)
         contents[i]["embedding"] = embedding
+        logger.debug(str(i+1)+"/"+str(len(contents))+": embedded")
 
     return contents
 

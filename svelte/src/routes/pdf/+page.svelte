@@ -23,6 +23,7 @@
 
     let pdfUrl = "https://core.ac.uk/download/pdf/230297187.pdf"
     pdfUrl = "http://www.jaist.ac.jp/~j-morita/aim.pdf"
+    pdfUrl = "https://inis.iaea.org/collection/NCLCollectionStore/_Public/36/116/36116213.pdf"
 
     async function analyzePdf() {
 
