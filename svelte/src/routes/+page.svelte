@@ -1,5 +1,11 @@
 <script>
-  let title = "ChatGPT Samples"
+  import { scale } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
+  import { afterUpdate } from "svelte";
+
+  let title = "AOAI ChatGPT Samples"
+
+  let isLoaded = false
 
   /**
    * @param {string | URL | undefined} page
@@ -8,6 +14,8 @@
     window.open(page, '_blank')
 
   }
+
+  afterUpdate(()=>isLoaded=true);
 </script>
 
 <svelte:head>
@@ -19,35 +27,42 @@
 
 <div class="board">
 
+  {#if isLoaded}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="card" on:click={()=>movepage('/basic')}>
+  <div class="card" on:click={()=>movepage('/basic')} transition:scale={{ delay: 250, duration: 300, easing: quintOut }}>
     <h2>シンプル</h2>
-    <p>ChatGPTの基本系サンプル</p>
+    <p>ChatGPTの基本系サンプル<br/>
+      APIサーバとして利用可能
+    </p>
   </div>
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="card" on:click={()=>movepage('/demae')}>
+  <div class="card" on:click={()=>movepage('/demae')} transition:scale={{ delay: 300, duration: 300, easing: quintOut }}>
     <h2>注文ボット</h2>
-    <p>来々軒の出前受付ボット</p>
+    <p>来々軒の出前受付ボット<br/>
+      自然会話と要約抽出
+    </p>
   </div>
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="card" on:click={()=>movepage('/book')}>
+  <div class="card" on:click={()=>movepage('/book')} transition:scale={{ delay: 350, duration: 300, easing: quintOut }}>
     <h2>書籍検索</h2>
     <p>Google Books API との連携 ChatGPT</p>
   </div>
     
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="card" on:click={()=>movepage('/bing')}>
+  <div class="card" on:click={()=>movepage('/bing')} transition:scale={{ delay: 400, duration: 300, easing: quintOut }}>
     <h2>Web検索</h2>
     <p>Bing検索+スクレイピングを取り込んだChatGPT</p>
   </div>
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="card" on:click={()=>movepage('/pdf')}>
+  <div class="card" on:click={()=>movepage('/pdf')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
     <h2>PDF分析チャット</h2>
     <p>Azure FormRecognizer と Embedding によるベクトル検索 + ChatGPT</p>
   </div>
+  {/if}
+
 </div>
 
 <style>
@@ -55,9 +70,9 @@
 
 :global(body){
   margin:0px;
-  background-color: #fff;
+  background-color: #000;
   font-family: 'Noto Sans JP', sans-serif;
-  background: linear-gradient(to right bottom, #333366, #336633);
+  background: linear-gradient(to right bottom, #224, #242);
   height:calc(100vh - 70px)
 }
 
@@ -92,6 +107,6 @@ h1{
 
 .card:hover{
   background-color: #fef;
-  color: #333;
+  color: #222;
 }
 </style>
