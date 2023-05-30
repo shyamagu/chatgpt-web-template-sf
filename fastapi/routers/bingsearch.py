@@ -56,8 +56,11 @@ async def bingsearch(messages: List[Message]):
 
     # answer_queryが配列形式の文字列かどうかをチェックする
     if not answer_query.startswith("[") or not answer_query.endswith("]"):
+
+        logger.info(answer_query)
+
         data = {
-            "message": "検索クエリ―の生成に失敗しました。",
+            "message": "検索クエリ―の生成に失敗しました。クリアしてみて下さい。",
             "query":"",
             "searchResult":[],
         }

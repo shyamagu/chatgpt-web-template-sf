@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from routers import simple,order,booksearch,bingsearch,pdfmaster
+from routers import simple,order,booksearch,bingsearch,pdfmaster,longconv
 from fastapi.responses import HTMLResponse
 
 app = FastAPI()
@@ -19,6 +19,9 @@ app.include_router(bingsearch.router)
 
 # /pdf**
 app.include_router(pdfmaster.router)
+
+# /longconv
+app.include_router(longconv.router)
 
 # 本当はもっとスマートにやりたい。sveltekitでのbuild成果物のHTMLを返す
 @app.get("/basic")
@@ -48,6 +51,12 @@ async def demae():
 @app.get("/pdf")
 async def demae():
     with open("static/pdf.html", encoding="utf-8") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content, status_code=200)
+
+@app.get("/long")
+async def demae():
+    with open("static/long.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
