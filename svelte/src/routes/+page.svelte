@@ -59,7 +59,9 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="card" on:click={()=>movepage('/pdf')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
     <h2>PDF分析チャット</h2>
-    <p>Azure FormRecognizer と Embedding によるベクトル検索 + ChatGPT</p>
+    <p>Azure FormRecognizer と Embedding によるベクトル検索 + ChatGPT<br/>
+      ※Single Userのみ
+    </p>
   </div>
   {/if}
 

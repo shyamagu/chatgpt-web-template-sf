@@ -22,7 +22,7 @@
       // chats から 最後の3要素だけを抽出
       const send_chats = chats.slice(-3);
     
-      const response = await fetch("/longconv", {
+      const response = await fetch("/longconv/summary", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -35,6 +35,17 @@
       chats = [...chats, {"role":"assistant","content":data.message}]
 
       loading = false;
+    }
+
+    // send GET request to clear session
+    async function clearSession(){
+      chats = [];
+      const response = await fetch("/longconv/clear", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
     }
 
     // KeyDown EventHandler
@@ -84,7 +95,7 @@
   </div>
   <textarea class="messagebox" title="chat" name="chat" id="chat" placeholder="メッセージを入力してください" bind:value={message} on:keydown={handleKeyDown}></textarea>
   <div class="messagebox_bottom">
-    <button class="button_clear" on:click={() => chats = []}>クリア</button>
+    <button class="button_clear" on:click={clearSession}>クリア</button>
     <button class="button_send" on:click={postMessage}>送信</button>
   </div>
   

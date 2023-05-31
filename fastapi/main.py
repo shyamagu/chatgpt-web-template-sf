@@ -2,8 +2,10 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from routers import simple,order,booksearch,bingsearch,pdfmaster,longconv
 from fastapi.responses import HTMLResponse
+#from starlette.middleware.sessions import SessionMiddleware
 
 app = FastAPI()
+#app.add_middleware(SessionMiddleware, secret_key="some-random-string")
 
 # /simple
 app.include_router(simple.router)

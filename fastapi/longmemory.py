@@ -19,6 +19,42 @@ from openai.embeddings_utils import get_embedding, cosine_similarity
 from fastapi.encoders import jsonable_encoder
 import json
 
+
+def saveConvSummaryMemory (summary):
+
+    global chatgpt_summary_memory
+    if not "chatgpt_summary_memory" in globals():
+        chatgpt_summary_memory = []
+
+    embedding = get_embedding(summary, settings.AOAI_EMB_MODEL)
+    chatgpt_summary_memory.append({"id":len(chatgpt_summary_memory),"content":summary,"embedding":embedding})
+
+def rememberConvSummaryMemory (message):
+
+    global chatgpt_summary_memory
+    if not "chatgpt_summary_memory" in globals():
+        chatgpt_summary_memory = []
+
+    embedding = get_embedding(message, settings.AOAI_EMB_MODEL)
+
+    if len(chatgpt_summary_memory) == 0:
+        return []
+
+    # chatgpt_memoryの各要素にsimilarityを追加
+    for i in range(len(chatgpt_summary_memory)):
+        chatgpt_summary_memory[i]["similarity"] = cosine_similarity(embedding, chatgpt_summary_memory[i]["embedding"])
+
+    # similarityでソートした上で、先頭の3要素を取得
+    top3_memory = sorted(chatgpt_summary_memory, key=lambda x: x["similarity"], reverse=True)
+    top3_memory = top3_memory[:3]
+
+    remember_memory = []
+    for i in range(len(top3_memory)):
+        remember_memory.append(top3_memory[i]["content"])
+
+    return remember_memory
+
+
 def saveConvMemory (messages):
 
     global chatgpt_memory
