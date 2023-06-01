@@ -22,7 +22,7 @@
       // chats から 最後の3要素だけを抽出
       const send_chats = chats.slice(-3);
     
-      const response = await fetch("/longconv/summary", {
+      const response = await fetch("/longconv/summary/novec", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

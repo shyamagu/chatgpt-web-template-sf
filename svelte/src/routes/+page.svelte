@@ -63,6 +63,14 @@
       ※Single Userのみ
     </p>
   </div>
+
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/long')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
+    <h2>長期記憶ボット
+    </h2>
+    <p>過去会話履歴 + 要約のベクトル検索
+    </p>
+  </div>
   {/if}
 
 </div>
