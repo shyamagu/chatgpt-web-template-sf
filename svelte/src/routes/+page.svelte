@@ -45,15 +45,25 @@
   </div>
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/survey')} transition:scale={{ delay: 300, duration: 300, easing: quintOut }}>
+    <h2>アンケートボット</h2>
+    <p>セミナーアンケートの受付ボット<br/>
+      自然会話と要約抽出
+    </p>
+  </div>
+  
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="card" on:click={()=>movepage('/book')} transition:scale={{ delay: 350, duration: 300, easing: quintOut }}>
     <h2>書籍検索</h2>
     <p>Google Books API との連携 ChatGPT</p>
+    <a href="https://qiita.com/shyamagu/items/8a2df72d13c6f8a97be1" target="_blank">参考サイト</a>
   </div>
     
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="card" on:click={()=>movepage('/bing')} transition:scale={{ delay: 400, duration: 300, easing: quintOut }}>
     <h2>Web検索</h2>
     <p>Bing検索+スクレイピングを取り込んだChatGPT</p>
+    <a href="https://qiita.com/shyamagu/items/9c00affc9f403b6d67ed" target="_blank">参考サイト</a>
   </div>
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -62,14 +72,16 @@
     <p>Azure FormRecognizer と Embedding によるベクトル検索 + ChatGPT<br/>
       ※Single Userのみ
     </p>
+    <a href="https://qiita.com/shyamagu/items/5e4c8329bdfeb4be3bcd" target="_blank">参考サイト</a>
   </div>
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="card" on:click={()=>movepage('/long')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
     <h2>長期記憶ボット
     </h2>
-    <p>過去会話履歴 + 要約のベクトル検索
+    <p>過去会話履歴 + 要約<br/>没) 過去会話履歴+ベクトル検索
     </p>
+    <a href="https://qiita.com/shyamagu/items/43e6370dd8937e1711c1" target="_blank">参考サイト</a>
   </div>
   {/if}
 
@@ -105,9 +117,9 @@ h1{
 .card{
   cursor: pointer;
   width: 200px;
-  height: 150px;
+  height: 180px;
   margin: 20px;
-  padding: 20px 20px 40px 20px;
+  padding: 10px 20px 40px 20px;
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 2px 4px 4px 0px #333;

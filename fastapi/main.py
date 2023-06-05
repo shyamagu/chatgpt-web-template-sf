@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from routers import simple,order,booksearch,bingsearch,pdfmaster,longconv
+from routers import simple,order,booksearch,bingsearch,pdfmaster,longconv,surveybot
 from fastapi.responses import HTMLResponse
 #from starlette.middleware.sessions import SessionMiddleware
 
@@ -25,9 +25,12 @@ app.include_router(pdfmaster.router)
 # /longconv
 app.include_router(longconv.router)
 
+# /surveybot
+app.include_router(surveybot.router)
+
 # 本当はもっとスマートにやりたい。sveltekitでのbuild成果物のHTMLを返す
 @app.get("/basic")
-async def demae():
+async def basic():
     with open("static/basic.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
@@ -39,26 +42,32 @@ async def demae():
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/book")
-async def demae():
+async def book():
     with open("static/book.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/bing")
-async def demae():
+async def bing():
     with open("static/bing.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/pdf")
-async def demae():
+async def pdf():
     with open("static/pdf.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/long")
-async def demae():
+async def long():
     with open("static/long.html", encoding="utf-8") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content, status_code=200)
+
+@app.get("/survey")
+async def survey():
+    with open("static/survey.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
