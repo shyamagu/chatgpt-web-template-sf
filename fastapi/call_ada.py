@@ -17,6 +17,15 @@ openai.api_key = settings.AOAI_API_KEY
 
 from openai.embeddings_utils import get_embedding, cosine_similarity
 
+
+def encode_content(content):
+    embedding = get_embedding(content, settings.AOAI_EMB_MODEL)
+    return embedding
+
+def get_similarity(embedding1, embedding2):
+    similarity = cosine_similarity(embedding1, embedding2)
+    return similarity
+
 def encode_contents (contents):
 
     # contentをループ処理

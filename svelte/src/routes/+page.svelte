@@ -83,6 +83,14 @@
     </p>
     <a href="https://qiita.com/shyamagu/items/43e6370dd8937e1711c1" target="_blank">参考サイト</a>
   </div>
+
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/emb')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
+    <h2>Embedding
+    </h2>
+    <p>ベクトル検索のプレイグランド
+    </p>
+  </div>
   {/if}
 
 </div>
