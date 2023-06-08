@@ -19,7 +19,7 @@ class Message(BaseModel):
 async def booksearch(messages: List[Message]):
 
     # messagesの最後から10要素のみにする
-    messages = messages[-10:]
+    messages = messages[-1:]
 
     messages_for_query = messages.copy()
     messages_for_summary = messages.copy()
