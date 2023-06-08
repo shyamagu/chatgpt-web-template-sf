@@ -90,6 +90,7 @@
     </h2>
     <p>ベクトル検索のプレイグランド
     </p>
+    <a href="https://qiita.com/shyamagu/items/587274fa1b46c38867a7" target="_blank">参考サイト</a>
   </div>
   {/if}
 
