@@ -99,7 +99,8 @@
     </h2>
     <p>プロンプトインジェクション対策
     </p>
-    <a href="https://qiita.com/shyamagu/items/92274d0956394e954951" target="_blank">参考サイト</a>
+    <a href="https://qiita.com/shyamagu/items/92274d0956394e954951" target="_blank">参考サイト</a><br/>
+    <a href="https://qiita.com/shyamagu/items/19c6e3c7dda54320aa36" target="_blank">参考サイト</a>
   </div>
   
   {/if}
