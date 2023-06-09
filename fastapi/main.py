@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from routers import simple,order,booksearch,bingsearch,pdfmaster,longconv,surveybot,embedding
+from routers import simple,order,booksearch,bingsearch,pdfmaster,longconv,surveybot,embedding,vsinjection
 from fastapi.responses import HTMLResponse
 #from starlette.middleware.sessions import SessionMiddleware
 
@@ -30,6 +30,9 @@ app.include_router(surveybot.router)
 
 # /embedding
 app.include_router(embedding.router)
+
+# /vsinjection
+app.include_router(vsinjection.router)
 
 # 本当はもっとスマートにやりたい。sveltekitでのbuild成果物のHTMLを返す
 @app.get("/basic")
@@ -77,6 +80,12 @@ async def survey():
 @app.get("/emb")
 async def emb():
     with open("static/emb.html", encoding="utf-8") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content, status_code=200)
+
+@app.get("/inject")
+async def emb():
+    with open("static/inject.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 

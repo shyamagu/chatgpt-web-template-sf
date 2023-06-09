@@ -69,7 +69,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="card" on:click={()=>movepage('/pdf')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
     <h2>PDF分析チャット</h2>
-    <p>Azure FormRecognizer と Embedding によるベクトル検索 + ChatGPT<br/>
+    <p>Azure FormRecognizer と Embedding + ChatGPT<br/>
       ※Single Userのみ
     </p>
     <a href="https://qiita.com/shyamagu/items/5e4c8329bdfeb4be3bcd" target="_blank">参考サイト</a>
@@ -92,6 +92,16 @@
     </p>
     <a href="https://qiita.com/shyamagu/items/587274fa1b46c38867a7" target="_blank">参考サイト</a>
   </div>
+
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/emb')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
+    <h2>Anti-Injection
+    </h2>
+    <p>プロンプトインジェクション対策
+    </p>
+    <a href="https://qiita.com/shyamagu/items/92274d0956394e954951" target="_blank">参考サイト</a>
+  </div>
+  
   {/if}
 
 </div>
@@ -109,25 +119,33 @@
 
 h1{
   color:#fef;
-  margin:70px auto;
-  font-size: 3.6em;
+  margin:40px auto;
+  font-size: 3.0em;
   text-align: center;
+}
+
+h2{
+  font-size:1.2em;
+}
+
+p{
+  font-size:0.9em;
 }
 
 .board{
   width:80%;
-  min-width:700px;
+  min-width:400px;
   margin:auto;
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card{
   cursor: pointer;
-  width: 200px;
-  height: 180px;
-  margin: 20px;
+  width: 180px;
+  height: 160px;
+  margin: 10px;
   padding: 10px 20px 40px 20px;
   border: 1px solid #ddd;
   border-radius: 10px;
