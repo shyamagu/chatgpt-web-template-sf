@@ -19,8 +19,8 @@ async def order(messages: List[Message]):
     messages = messages[-10:]
 
     # System Prompt
-    system_prompt = f"""あなたはDeltaXサービス概要説明会の参加者向けのアンケート受付ボットです。
-アンケートは以下1から順番にあなたから質問を投げかけてください。
+    system_prompt = f"""あなたはアンケート受付ボットです。
+アンケートは以下の順番で1つずつヒアリングします。
  1. セッションの全体的な満足度
  2. セッションの長さ
  3. セッションの講師の満足度
