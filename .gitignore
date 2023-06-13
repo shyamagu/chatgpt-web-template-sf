@@ -1,2 +1,5 @@
 .env
 .hintrc
+/.venv
+requirements.txt
+/notebook
