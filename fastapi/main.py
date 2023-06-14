@@ -36,55 +36,55 @@ app.include_router(vsinjection.router)
 
 # 本当はもっとスマートにやりたい。sveltekitでのbuild成果物のHTMLを返す
 @app.get("/basic")
-async def basic():
+def basic():
     with open("static/basic.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/demae")
-async def demae():
+def demae():
     with open("static/demae.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/book")
-async def book():
+def book():
     with open("static/book.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/bing")
-async def bing():
+def bing():
     with open("static/bing.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/pdf")
-async def pdf():
+def pdf():
     with open("static/pdf.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/long")
-async def long():
+def long():
     with open("static/long.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/survey")
-async def survey():
+def survey():
     with open("static/survey.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/emb")
-async def emb():
+def emb():
     with open("static/emb.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/inject")
-async def emb():
+def emb():
     with open("static/inject.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)

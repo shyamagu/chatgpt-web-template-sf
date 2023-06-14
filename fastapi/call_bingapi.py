@@ -10,7 +10,7 @@ settings = Settings(_env_file=".env")
 
 from logger import logger
 
-async def call_bingapi (url,query,option):
+def call_bingapi (url,query,option):
 
     bingurl = url+query+option
 

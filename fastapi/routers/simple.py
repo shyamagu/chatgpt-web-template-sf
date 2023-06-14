@@ -13,7 +13,7 @@ class Message(BaseModel):
     content: str
 
 @router.post("/simple")
-async def message(messages: List[Message]):
+def message(messages: List[Message]):
 
     logger.debug(messages)
 

@@ -12,7 +12,7 @@ class Query(BaseModel):
     target:str
 
 @router.post("/embedding")
-async def embedding(query: Query):
+def embedding(query: Query):
 
     embedding_word = encode_content(query.word)
     embedding_target = encode_content(query.target)

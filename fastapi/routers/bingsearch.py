@@ -19,7 +19,7 @@ class Message(BaseModel):
     content: str
 
 @router.post("/bingsearch")
-async def bingsearch(messages: List[Message]):
+def bingsearch(messages: List[Message]):
 
     # messagesの最後から10要素のみにする
     messages = messages[-10:]
@@ -73,7 +73,7 @@ async def bingsearch(messages: List[Message]):
 
     logger.debug(answer_query)
  
-    bingResult = await call_bingapi(bingsearchurl,querystring,option)
+    bingResult = call_bingapi(bingsearchurl,querystring,option)
 
     logger.debug("## bingapi called")
 

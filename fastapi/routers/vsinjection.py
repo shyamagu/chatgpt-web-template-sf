@@ -14,7 +14,7 @@ class Message(BaseModel):
     content: str
 
 @router.post("/vsinjection")
-async def booksearch(messages: List[Message]):
+def booksearch(messages: List[Message]):
 
     # messagesの最後の1要素のcontentのみを取得する
     last_message = messages[-1].content

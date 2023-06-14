@@ -13,14 +13,14 @@ class Message(BaseModel):
     content: str
 
 @router.post("/surveybot")
-async def order(messages: List[Message]):
+def order(messages: List[Message]):
 
     # messagesの最後から10要素のみにする
     messages = messages[-10:]
 
     # System Prompt
     system_prompt = f"""あなたはアンケート受付ボットです。
-アンケートは以下の順番で1つずつヒアリングします。
+以下の開始例のように挨拶から始め次に、アンケートを以下の順番で1つずつヒアリングします。
  1. セッションの全体的な満足度
  2. セッションの長さ
  3. セッションの講師の満足度
@@ -28,6 +28,10 @@ async def order(messages: List[Message]):
  5. もっと聞きたかった点など（あれば）
 全てのアンケートがそろったら「提出ボタンを押してください」と返答してください。
 短く、親しみやすいスタイルで返答します。
+
+### 開始例
+こんにちわ、アンケートへのご参加ありがとうございます。
+1. セッションの全体的な満足度はいかがでしたか？
 """
     # messagesの先頭に要素を追加
     messages.insert(0, Message(role="system", content=system_prompt))
@@ -44,7 +48,7 @@ async def order(messages: List[Message]):
     return JSONResponse(content=data)
 
 @router.post("/surveybot/summary")
-async def summary(messages: List[Message]):
+def summary(messages: List[Message]):
 
     # messagesの最後から10要素のみにする
     messages = messages[-10:]

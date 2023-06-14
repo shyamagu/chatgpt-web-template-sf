@@ -37,7 +37,7 @@ class Message(BaseModel):
     content: str
 
 @router.post("/order")
-async def order(messages: List[Message]):
+def order(messages: List[Message]):
 
     # messagesの最後から10要素のみにする
     messages = messages[-10:]
@@ -69,7 +69,7 @@ async def order(messages: List[Message]):
     return JSONResponse(content=data)
 
 @router.post("/order/summary")
-async def summary(messages: List[Message]):
+def summary(messages: List[Message]):
 
     # messagesの最後から10要素のみにする
     messages = messages[-10:]

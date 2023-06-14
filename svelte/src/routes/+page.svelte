@@ -94,7 +94,7 @@
   </div>
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="card" on:click={()=>movepage('/emb')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
+  <div class="card" on:click={()=>movepage('/inject')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
     <h2>Anti-Injection
     </h2>
     <p>プロンプトインジェクション対策

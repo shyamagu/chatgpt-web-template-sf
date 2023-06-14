@@ -14,7 +14,7 @@ class Message(BaseModel):
     content: str
 
 @router.post("/longconv")
-async def longconv(messages: List[Message]):
+def longconv(messages: List[Message]):
 
     memoryMessages = rememberConvMemory(messages[-1].content)
 
@@ -44,7 +44,7 @@ async def longconv(messages: List[Message]):
     return JSONResponse(content=data)
 
 @router.post("/longconv/summary")
-async def longconvsummary(messages: List[Message]):
+def longconvsummary(messages: List[Message]):
 
     global chatgpt_conv_history
     # chatgpt_conv_historyが定義されていなければ空の配列を定義
@@ -120,7 +120,7 @@ ChatGPT: 山田さん、始めまして。今日は何かお困りですか？
     return JSONResponse(content=data)
 
 @router.post("/longconv/summary/novec")
-async def longconvsummarynovec(messages: List[Message]):
+def longconvsummarynovec(messages: List[Message]):
 
     global history_summary
     if not "history_summary" in globals():
@@ -190,7 +190,7 @@ ChatGPT: 山田さん、始めまして。今日は何かお困りですか？
     return JSONResponse(content=data)
 
 @router.get("/longconv/clear")
-async def clear(request:Request):
+def clear(request:Request):
     global chatgpt_conv_history
     chatgpt_conv_history = []
     return JSONResponse(content={"message": "ok"})

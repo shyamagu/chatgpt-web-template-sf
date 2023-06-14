@@ -16,7 +16,7 @@ class Message(BaseModel):
     content: str
 
 @router.post("/booksearch")
-async def booksearch(messages: List[Message]):
+def booksearch(messages: List[Message]):
 
     # messagesの最後から10要素のみにする
     messages = messages[-1:]

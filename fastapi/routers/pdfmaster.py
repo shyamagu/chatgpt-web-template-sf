@@ -18,7 +18,7 @@ class PdfUrl(BaseModel):
     url: str
 
 @router.post("/pdfanalyze")
-async def pdfanalyze(pdfUrl: PdfUrl):
+def pdfanalyze(pdfUrl: PdfUrl):
     logger.debug(pdfUrl.url)
 
     analyze_result = analyze_pdf(pdfUrl.url)
@@ -34,7 +34,7 @@ async def pdfanalyze(pdfUrl: PdfUrl):
     return JSONResponse(content=data)
 
 @router.post("/pdfsearch")
-async def pdfsearch(messages: List[Message]):
+def pdfsearch(messages: List[Message]):
 
 
     # messagesの最後から10要素のみにする
