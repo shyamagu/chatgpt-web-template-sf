@@ -6,7 +6,8 @@ import re
 def analyze_html(url):
 
     #urlのHTMLを取得する
-    response = requests.get(url)
+    response = requests.get(url,timeout=10)
+
     response.encoding = response.apparent_encoding
 
     html = response.text
