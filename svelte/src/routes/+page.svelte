@@ -102,6 +102,14 @@
     <a href="https://qiita.com/shyamagu/items/92274d0956394e954951" target="_blank">参考サイト</a><br/>
     <a href="https://qiita.com/shyamagu/items/19c6e3c7dda54320aa36" target="_blank">参考サイト</a>
   </div>
+
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/auto')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
+    <h2>自律型AI
+    </h2>
+    <p>時間依存のパラメータをもったChatGPT<br/>※非業務？
+    </p>
+  </div>
   
   {/if}
 
