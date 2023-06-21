@@ -110,6 +110,14 @@
     <p>時間依存のパラメータをもったChatGPT<br/>※非業務？
     </p>
   </div>
+
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/stream')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
+    <h2>ストリーム出力
+    </h2>
+    <p>シンプルなChatGPTの出力ストリーム対応版
+    </p>
+  </div>
   
   {/if}
 
