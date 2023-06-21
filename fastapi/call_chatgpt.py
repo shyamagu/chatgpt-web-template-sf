@@ -21,6 +21,7 @@ def call_chatgpt (messages,temperature=0):
         engine=settings.AOAI_MODEL, # engine = "deployment_name".
         messages=messages,
         temperature=temperature,
+        timeout = 20
     )
 
     return response['choices'][0]['message']['content']
