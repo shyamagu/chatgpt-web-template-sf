@@ -2,3 +2,4 @@
 .hintrc
 /.venv
 requirements.txt
+/private
