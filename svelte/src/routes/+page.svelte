@@ -109,7 +109,8 @@
     </h2>
     <p>時間依存のパラメータをもったChatGPT<br/>※非業務？
     </p>
-  </div>
+    <a href="https://qiita.com/shyamagu/items/a540f460284ea5ea5d84" target="_blank">参考サイト</a>
+ </div>
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="card" on:click={()=>movepage('/stream')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
@@ -117,6 +118,7 @@
     </h2>
     <p>シンプルなChatGPTの出力ストリーム対応版
     </p>
+    <a href="https://qiita.com/shyamagu/items/9e03ba3531afc3a3d37c" target="_blank">参考サイト</a>
   </div>
   
   {/if}
