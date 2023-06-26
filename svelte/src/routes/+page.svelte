@@ -121,6 +121,14 @@
     <a href="https://qiita.com/shyamagu/items/9e03ba3531afc3a3d37c" target="_blank">参考サイト</a>
   </div>
   
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="card" on:click={()=>movepage('/basicflow')} transition:scale={{ delay: 450, duration: 300, easing: quintOut }}>
+    <h2>ChatGPT フロー
+    </h2>
+    <p>シンプルなChatGPTのフロー実行サンプル
+    </p>
+  </div>
+  
   {/if}
 
 </div>
