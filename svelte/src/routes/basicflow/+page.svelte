@@ -1,7 +1,7 @@
 <script>
     import Prompts from './Prompts.svelte';
 
-    let title = "ChatGPT Flow Simple"
+    let title = "ChatGPT Flow Simple -Basic"
 
     /**
    * @type {string[]}
