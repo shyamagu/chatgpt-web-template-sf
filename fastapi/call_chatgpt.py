@@ -25,3 +25,14 @@ def call_chatgpt (messages,temperature=0):
     )
 
     return response['choices'][0]['message']['content']
+
+def call_chatgpt_w_token (messages,temperature=0):
+
+    response = openai.ChatCompletion.create(
+        engine=settings.AOAI_MODEL, # engine = "deployment_name".
+        messages=messages,
+        temperature=temperature,
+        timeout = 20
+    )
+
+    return response['choices'][0]['message']['content'],response['usage']['prompt_tokens'], response['usage']['completion_tokens'], response['usage']['total_tokens']

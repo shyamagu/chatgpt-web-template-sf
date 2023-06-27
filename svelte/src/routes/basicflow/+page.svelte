@@ -1,7 +1,7 @@
 <script>
     import Prompts from './Prompts.svelte';
 
-    let title = "ChatGPT Flow Simple -Basic"
+    let title = "ChatGPT Flow Simple"
 
     /**
    * @type {string[]}
@@ -21,6 +21,15 @@
       result = event.detail
       userPrompts = [...userPrompts, result]
       scrolltoSide();
+    }
+
+    /**
+   * @param {number} index
+   */
+    function deletePrompt(index){
+      systemPrompts.splice(index, 1);
+      userPrompts.splice(index, 1);
+      userPrompts = userPrompts;
     }
 
         // Automatic scrolldown in chatfield
@@ -43,6 +52,11 @@
 <div class="prompts_field">
   {#each userPrompts as userPrompt, i (i)}
     <div class="prompt_field">
+      <div class="delete_button_field">
+      {#if userPrompts.length !== i+1}
+        <button class="delete_button" on:click={() => deletePrompt(i)}>x</button>
+      {/if}
+      </div>
       <Prompts bind:systemPrompt={systemPrompts[i]} bind:userPrompt={userPrompt} on:result={handleResult} ended={userPrompts.length === i+1}/>
     </div>
   {/each}
@@ -59,21 +73,31 @@
   background: linear-gradient(to bottom, #f0f0f0, var(--back_color));
   font-family: 'Noto Sans JP', sans-serif;
   height:calc(100vh - 20px);
-  overflow-x:hidden
+  overflow-x:hidden;
+  overflow-y:hidden;
   }
 
   .prompts_field {
-      display: flex;
-      min-width: calc(100% + 1px);
-      overflow-x: scroll;
+    display: flex;
+    min-width: calc(100% + 1px);
+    overflow-x: scroll;
   }
 
   .prompt_field {
       flex-basis: 450px;
       min-width:450px;
-      margin-top:50px;
+      margin-top:20px;
       margin-left:50px;
-      margin-bottom:40px;
+      margin-bottom:30px;
+  }
+  .delete_button_field{
+    height:25px;
+  }
+  .delete_button {
+    color:#f99;
+    border: 1px solid #ccc;
+    border-radius: 20%;
+    margin-bottom:2px;
   }
 
 </style>

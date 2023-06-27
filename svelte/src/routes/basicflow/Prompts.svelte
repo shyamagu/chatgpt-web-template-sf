@@ -14,6 +14,8 @@
 
   let loading = false;
 
+  let token = 0;
+
   export async function callChatGPT() {
     loading = true;
 
@@ -30,6 +32,8 @@
     const data = await response.json();
 
     const result = data.message;
+    token = data.input;
+
     dispatch("result", result);
 
     loading = false;
@@ -54,6 +58,9 @@
       bind:value={userPrompt}
       placeholder="Enter your user prompt here"
     />
+    <div class="token_display">
+      {token}
+    </div>
   </div>
 
   {#if loading}
@@ -84,6 +91,15 @@
     align-items: center;
     justify-content: center;
     width: 400px;
+  }
+
+  .token_display{
+    width: 100%;
+    font-size:1.1em;
+    color:#444;
+    text-align: right;
+    margin-bottom: 10px;
+    margin-right:10px;
   }
 
   .button_field {
