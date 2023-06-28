@@ -19,22 +19,29 @@
   export async function callChatGPT() {
     loading = true;
 
-    const chats = [{"role":"system","content":systemPrompt}, {"role":"user","content":userPrompt}]
+    if(systemPrompt){
 
-    const response = await fetch("/simple", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(chats)
-    });
+      const chats = [{"role":"system","content":systemPrompt}, {"role":"user","content":userPrompt}]
 
-    const data = await response.json();
+      const response = await fetch("/simple", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(chats)
+      });
 
-    const result = data.message;
-    token = data.input;
+      const data = await response.json();
 
-    dispatch("result", result);
+      const result = data.message;
+      token = data.input;
+
+      dispatch("result", result);
+
+    }else{
+
+      dispatch("result", "");
+    }
 
     loading = false;
   }
@@ -59,7 +66,11 @@
       placeholder="Enter your user prompt here"
     />
     <div class="token_display">
-      {token}
+      {#if token>0}
+        {token}
+      {:else}
+        NaN
+      {/if}
     </div>
   </div>
 
@@ -138,7 +149,7 @@
 
   .user_textarea {
     width: 100%;
-    height: calc(100vh - 300px);
+    height: calc(100vh - 330px);
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: none;
