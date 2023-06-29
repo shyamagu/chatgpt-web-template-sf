@@ -127,6 +127,7 @@
     </h2>
     <p>シンプルなChatGPTのフロー実行サンプル
     </p>
+    <a href="https://qiita.com/shyamagu/items/f53e63b8ec4801cb10d4" target="_blank">参考サイト</a>
   </div>
   
   {/if}
