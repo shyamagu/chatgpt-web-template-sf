@@ -2,17 +2,15 @@
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
-  /**
-   * @type {string}
-   */
-  export let userPrompt;
+  export let userPrompt="";
 
-  /**
-   * @type {string}
-   */
-  export let systemPrompt;
+  export let systemPrompt="";
+
+  export let title = "";
+  let editable = false;
 
   let loading = false;
+
 
   let token = 0;
 
@@ -47,10 +45,23 @@
   }
 
   export let ended = false;
+
+  function handleTitleBlur() {
+    editable = !editable
+  }
+
 </script>
 
 <div class="main">
   <div class="prompt_filed">
+    {#if editable}
+      <input class="title titleinput" type="text" bind:value={title} placeholder="Enter your title here" on:blur={handleTitleBlur}/>
+    {:else}
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <div class="title" on:click={handleTitleBlur}>
+        {title}
+      </div>
+    {/if}
     <textarea
       class="system_textarea"
       class:active={ended}
@@ -96,6 +107,15 @@
     width: 100%;
   }
 
+  .title{
+    width:100%;
+    font-size: 1.2em;
+    margin:10px;
+    margin-left:20px;
+    font-weight: bold;
+    height:30px;
+  }
+
   .prompt_filed {
     display: flex;
     flex-direction: column;
@@ -106,10 +126,10 @@
 
   .token_display{
     width: 100%;
-    font-size:1.1em;
+    font-size:1.0em;
     color:#444;
     text-align: right;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     margin-right:10px;
   }
 

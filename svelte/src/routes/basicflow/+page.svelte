@@ -1,5 +1,6 @@
 <script>
   import Prompts from "./Prompts.svelte";
+  import { afterUpdate } from "svelte";
 
   let title = "ChatGPT Flow Simple";
 
@@ -14,12 +15,18 @@
   let userPrompts = [""];
   let result = "";
 
+
+  let titles = [""];
+
   /**
    * @param {{detail: string;}} event
    */
   function handleResult(event) {
     result = event.detail;
     userPrompts = [...userPrompts, result];
+  }
+
+  $: if (userPrompts.length > 1){
     scrolltoSide();
   }
 
@@ -29,6 +36,7 @@
   function deletePrompt(index) {
     systemPrompts.splice(index, 1);
     userPrompts.splice(index, 1);
+    titles.splice(index, 1);
     userPrompts = userPrompts;
   }
 
@@ -36,6 +44,7 @@
     const data = {
       systems: systemPrompts,
       users: userPrompts,
+      titles:titles,
     };
     const a = document.createElement("a");
 
@@ -62,6 +71,10 @@
       const data = JSON.parse(reader.result);
       systemPrompts = data.systems;
       userPrompts = data.users;
+
+      if(data.titles){
+        titles = data.titles;
+      }
     };
     reader.readAsText(file);
   }
@@ -80,9 +93,6 @@
     input.click();
   }
 
-  // Automatic scrolldown in chatfield
-  import { afterUpdate } from "svelte";
-
   const scrolltoSide = () => {
     const promptField = document.querySelector(".prompts_field");
     if (promptField) {
@@ -90,7 +100,7 @@
       promptField.scrollTo(width, 0);
     }
   };
-  afterUpdate(scrolltoSide);
+  //afterUpdate(scrolltoSide);
 </script>
 
 <svelte:head>
@@ -115,6 +125,7 @@
       <Prompts
         bind:systemPrompt={systemPrompts[i]}
         bind:userPrompt
+        bind:title={titles[i]}
         on:result={handleResult}
         ended={userPrompts.length === i + 1}
       />
@@ -148,10 +159,10 @@
     min-width: 450px;
     margin-top: 5px;
     margin-left: 50px;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
   }
   .delete_button_field {
-    height: 25px;
+    height: 20px;
   }
   .delete_button {
     color: #f99;
