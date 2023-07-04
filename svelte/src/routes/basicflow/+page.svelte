@@ -93,6 +93,17 @@
     input.click();
   }
 
+  // サーバサイドのファイルを読み込む関数
+  function importExample() {
+    fetch("/basicflow/flows_1688093834840.json")
+      .then((res) => res.json())
+      .then((data) => {
+        systemPrompts = data.systems;
+        userPrompts = data.users;
+        titles = data.titles;
+      });
+  }
+
   const scrolltoSide = () => {
     const promptField = document.querySelector(".prompts_field");
     if (promptField) {
@@ -110,6 +121,7 @@
 <div class="button_field">
   <button class="port_button" on:click={downloadJson}>Export</button>
   <button class="port_button" on:click={openDialog}>Import</button>
+  <button class="port_button hidden_button" on:click={importExample}>Example1</button>
 </div>
 
 <div class="prompts_field">
@@ -183,5 +195,10 @@
     font-family: "Noto Sans JP", sans-serif;
     border: none;
     border-radius: 20px;
+  }
+
+  .hidden_button {
+    color: #aaa;
+    background-color: #ddd;
   }
 </style>
