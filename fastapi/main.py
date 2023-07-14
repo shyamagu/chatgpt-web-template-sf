@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from routers import simple,order,booksearch,bingsearch,pdfmaster,longconv,surveybot,embedding,vsinjection,autonomous,simple_stream
+from routers import simple,order,booksearch,bingsearch,pdfmaster,longconv,surveybot,embedding,vsinjection,autonomous,simple_stream,gathering
 from fastapi.responses import HTMLResponse
 #from starlette.middleware.sessions import SessionMiddleware
 
@@ -39,6 +39,9 @@ app.include_router(autonomous.router)
 
 # /simple/stream
 app.include_router(simple_stream.router)
+
+# /gathering
+app.include_router(gathering.router)
 
 # 本当はもっとスマートにやりたい。sveltekitでのbuild成果物のHTMLを返す
 @app.get("/basic")
@@ -110,6 +113,12 @@ def emb():
 @app.get("/basicflow")
 def emb():
     with open("static/basicflow.html", encoding="utf-8") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content, status_code=200)
+
+@app.get("/gather")
+def emb():
+    with open("static/gather.html", encoding="utf-8") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
